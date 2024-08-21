@@ -4,18 +4,21 @@
 
 let CryptoJS = require("crypto-js");
 
-let key = "B374A26A71490437AA024E4FADD5B497FDFF1A8EA6FF12F6FB65AF2720B59CCF";
+let server_key;
 
-browser.storage.local.get("key").then((elt) => {
-  if (elt.key === undefined) {
-    browser.storage.local.set({ key: key });
+browser.storage.local.get("server_key").then((elt) => {
+  if (elt.server_key === undefined) {
+    server_key = CryptoJS.lib.WordArray.random(256 / 8).toString();
+    browser.storage.local.set({
+      server_key: server_key,
+    });
   } else {
-    key = elt.key ?? key;
+    server_key = elt.server_key;
   }
 });
 
 browser.storage.local.onChanged.addListener((elt) => {
-  key = elt.key.newValue;
+  server_key = elt.server_key.newValue;
 });
 
 /**
@@ -29,7 +32,7 @@ const encryption = {
     return message;
   },
   AES: (message) => {
-    return CryptoJS.AES.encrypt(message, key).toString();
+    return CryptoJS.AES.encrypt(message, server_key).toString();
   },
 };
 
@@ -44,7 +47,7 @@ const decryption = {
     return message;
   },
   AES: (message) => {
-    const decrypted = CryptoJS.AES.decrypt(message, key);
+    const decrypted = CryptoJS.AES.decrypt(message, server_key);
     try {
       const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
 
