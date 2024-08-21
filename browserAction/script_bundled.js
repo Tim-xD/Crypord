@@ -6568,210 +6568,44 @@
     }
   });
 
-  // content/encryption.js
+  // browserAction/script.js
   var CryptoJS = require_crypto_js();
-  var server_key;
+  var server_input = document.getElementById("server_key");
+  var channel_input = document.getElementById("channel_key");
   browser.storage.local.get("server_key").then((elt) => {
     if (elt.server_key === void 0) {
-      server_key = CryptoJS.lib.WordArray.random(256 / 8).toString();
+      server_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
       browser.storage.local.set({
-        server_key
+        server_key: server_input.value
       });
     } else {
-      server_key = elt.server_key;
+      server_input.value = elt.server_key;
     }
   });
-  browser.storage.local.onChanged.addListener((elt) => {
-    server_key = elt.server_key.newValue;
-  });
-  var encryption = {
-    PLAIN: (message) => {
-      return message;
-    },
-    AES: (message) => {
-      return CryptoJS.AES.encrypt(message, server_key).toString();
-    }
-  };
-  var decryption = {
-    PLAIN: (message) => {
-      return message;
-    },
-    AES: (message) => {
-      const decrypted = CryptoJS.AES.decrypt(message, server_key);
-      try {
-        const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-        if (decryptedStr !== "") {
-          return decryptedStr;
-        }
-      } catch (e) {
-        console.log(
-          "Message couldn't be decrypted, either it was not encrypted or you have the wrong password"
-        );
-      }
-    }
-  };
-  function encryptMessage(message) {
-    if (message === "") {
-      return "";
-    }
-    for (const [algo, lambda] of Object.entries(encryption)) {
-      if (message.startsWith(`/${algo} `)) {
-        return `/${algo} ${lambda(message.substring(algo.length + 2))}`;
-      }
-    }
-    return `/AES ${encryption.AES(message)}`;
-  }
-  function decryptMessage(message) {
-    for (const [algo, lambda] of Object.entries(decryption)) {
-      if (message.startsWith(`/${algo} `)) {
-        return lambda(message.substring(algo.length + 2));
-      }
-    }
-  }
-
-  // content/html_interceptor.js
-  function escapeHtml(str) {
-    return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
-  }
-  function unescapeHtml(str) {
-    return str.replaceAll("&amp;", "&").replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("&quot;", '"').replaceAll("&#039;", "'");
-  }
-  function waitForElement(selector) {
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)) {
-        return resolve(document.querySelector(selector));
-      }
-      const observer = new MutationObserver((mutations) => {
-        if (document.querySelector(selector)) {
-          observer.disconnect();
-          resolve(document.querySelector(selector));
-        }
+  browser.storage.local.get("channel_key").then((elt) => {
+    if (elt.channel_key === void 0) {
+      channel_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
+      browser.storage.local.set({
+        channel_key: channel_input.value
       });
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    });
-  }
-  function showDecryptedMessage(container) {
-    let messageEncrypted = "";
-    Array.from(container.children).forEach((span) => {
-      if (!span.className.startsWith("timestamp")) {
-        messageEncrypted += span.innerHTML;
-        span.innerHTML = span.innerHTML.replace(/.*/g, "");
-      }
-    });
-    messageEncrypted = unescapeHtml(messageEncrypted);
-    const messageDecrypted = decryptMessage(messageEncrypted) ?? messageEncrypted;
-    container.firstElementChild.innerHTML = container.firstElementChild.innerHTML.replace(
-      /.*/g,
-      escapeHtml(messageDecrypted)
-    );
-  }
-  function showDecryptedMessageEdition(container) {
-    let messageEncrypted = "";
-    Array.from(container.children).forEach((span) => {
-      if (!span.className.startsWith("timestamp")) {
-        messageEncrypted += span.innerHTML;
-        span.focus();
-        span.setAttribute("contentEditable", true);
-        document.execCommand("selectAll", false);
-        document.execCommand("insertText", false, "");
-      }
-    });
-    messageEncrypted = unescapeHtml(messageEncrypted);
-    const messageDecrypted = decryptMessage(messageEncrypted) ?? messageEncrypted;
-    container.firstElementChild.focus();
-    document.execCommand("insertText", false, escapeHtml(messageDecrypted));
-  }
-  waitForElement('ol[data-list-id="chat-messages"]').then((targetNode) => {
-    const config = { attributes: true, childList: true, subtree: true };
-    const callback = (mutationList, observer2) => {
-      for (const mutation of mutationList) {
-        if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            if (node.id !== void 0 && node.id.startsWith("chat-messages-")) {
-              showDecryptedMessage(
-                node.querySelector("div[id^=message-content]")
-              );
-            } else if (node.localName === "span" && node.parentElement.id !== void 0 && node.parentElement.id.startsWith !== "message-content-") {
-              showDecryptedMessage(node.parentElement);
-            } else if (node.dataset !== void 0 && node.dataset.slateNode === "element") {
-              showDecryptedMessageEdition(
-                node.querySelector("span[data-slate-leaf=true]")
-              );
-            }
-          });
-        } else if (mutation.type === "attributes") {
-        }
-      }
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(targetNode, config);
-  });
-
-  // content/request_processor.js
-  addEventListener("crypord_request_received", (event) => {
-    console.warn(
-      "DEBUGPRINT[50]: request_processor.js:11: event.detail=",
-      event.detail
-    );
-    dispatchEvent(
-      new CustomEvent("crypord_request_received_result", {
-        detail: processRetrievedMessages(event.detail)
-      })
-    );
-    event.stopImmediatePropagation();
-  });
-  addEventListener("crypord_request_sent", (event) => {
-    console.warn(
-      "DEBUGPRINT[51]: request_processor.js:20: event.detail=",
-      event.detail
-    );
-    dispatchEvent(
-      new CustomEvent("crypord_request_sent_result", {
-        detail: processSendingMessages(event.detail)
-      })
-    );
-    event.stopImmediatePropagation();
-  });
-  function processSendingMessages(body) {
-    body.content = encryptMessage(body.content);
-    return body;
-  }
-  function processRetrievedMessages(request) {
-    let messages;
-    try {
-      messages = JSON.parse(request.response);
-    } catch (e) {
-      console.warn("processRetrievedMessages: Error while parsing JSON", e);
-      return request;
+    } else {
+      channel_input.value = elt.channel_key;
     }
-    if (messages !== void 0) {
-      Object.defineProperty(request, "response", { writable: true });
-      Object.defineProperty(request, "responseText", { writable: true });
-      if (Array.isArray(messages)) {
-        messages = messages.map((elt) => {
-          const decrypted = decryptMessage(elt.content);
-          if (decrypted !== void 0) {
-            elt.content = decrypted;
-          }
-          return elt;
-        });
-      } else {
-        const decrypted = decryptMessage(messages.content);
-        if (decrypted !== void 0) {
-          messages.content = decrypted;
-        }
-      }
-      request.response = JSON.stringify(messages);
-      request.responseText = request.response;
-    }
-    return request;
-  }
-
-  // content/content.js
-  browser.runtime.sendMessage({});
+  });
+  server_input.addEventListener("change", (event) => {
+    browser.storage.local.set({ server_key: event.target.value });
+  });
+  channel_input.addEventListener("change", (event) => {
+    browser.storage.local.set({ channel_key: event.target.value });
+  });
+  [256, 512, 1024, 2048].forEach((key_len) => {
+    document.getElementById("generate_key_" + key_len).addEventListener("click", (event) => {
+      navigator.clipboard.writeText(
+        CryptoJS.lib.WordArray.random(key_len / 8).toString()
+      );
+      document.getElementById("copied_key_" + key_len).style.display = "inline-block";
+    });
+  });
 })();
 /*! Bundled license information:
 

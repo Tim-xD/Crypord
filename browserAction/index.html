@@ -5,8 +5,24 @@
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <h1 id="myHeading">Crypord</h1>
-    <input id="key" type="text" />
-    <script src="script.js"></script>
+    <h1>Crypord</h1>
+    <h3>Server key</h3>
+    <input id="server_key" type="text" />
+    <h3>Channel key</h3>
+    <input id="channel_key" type="text" />
+    <h3>Generate keys</h3>
+    <button id="generate_key_256">256 bits</button>
+    <div id="copied_key_256">Copied!</div>
+    <br />
+    <button id="generate_key_512">512 bits</button>
+    <div id="copied_key_512">Copied!</div>
+    <br />
+    <button id="generate_key_1024">1024 bits</button>
+    <div id="copied_key_1024">Copied!</div>
+    <br />
+    <button id="generate_key_2048">2048 bits</button>
+    <div id="copied_key_2048">Copied!</div>
+    <br />
+    <script src="script_bundled.js"></script>
   </body>
 </html>
