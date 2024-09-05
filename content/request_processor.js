@@ -6,10 +6,6 @@ import { decryptMessage, encryptMessage } from "./encryption";
 
 /** Event listeners retrieving the messages from the webpage */
 addEventListener("crypord_request_received", (event) => {
-  console.warn(
-    "DEBUGPRINT[50]: request_processor.js:11: event.detail=",
-    event.detail,
-  );
   dispatchEvent(
     new CustomEvent("crypord_request_received_result", {
       detail: processRetrievedMessages(event.detail),
@@ -20,10 +16,6 @@ addEventListener("crypord_request_received", (event) => {
 });
 
 addEventListener("crypord_request_sent", (event) => {
-  console.warn(
-    "DEBUGPRINT[51]: request_processor.js:20: event.detail=",
-    event.detail,
-  );
   dispatchEvent(
     new CustomEvent("crypord_request_sent_result", {
       detail: processSendingMessages(event.detail),

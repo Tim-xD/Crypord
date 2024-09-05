@@ -1,5 +1,8 @@
 (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
     get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
   }) : x)(function(x) {
@@ -7,9 +10,25 @@
       return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x + '" is not supported');
   });
+  var __esm = (fn, res) => function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+  };
   var __commonJS = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // (disabled):crypto
   var require_crypto = __commonJS({
@@ -6568,41 +6587,86 @@
     }
   });
 
+  // utils/storage.js
+  var storage_exports = {};
+  __export(storage_exports, {
+    generateRandomKey: () => generateRandomKey,
+    getChannelKey: () => getChannelKey,
+    getCurrentId: () => getCurrentId,
+    getServerKey: () => getServerKey
+  });
+  function getCurrentId(url) {
+    return url.match(/\/channels\/(?<server>[^/]*)\/(?<channel>[^/]*)/).groups;
+  }
+  function getServerKey(serverId) {
+    return browser.storage.local.get(serverId).then((server) => {
+      return server[serverId];
+    });
+  }
+  function getChannelKey(serverId, channelId) {
+    return browser.storage.local.get(`${serverId}/${channelId}`).then((server) => {
+      return server[`${serverId}/${channelId}`];
+    });
+  }
+  var CryptoJS, generateRandomKey;
+  var init_storage = __esm({
+    "utils/storage.js"() {
+      CryptoJS = require_crypto_js();
+      generateRandomKey = (len) => CryptoJS.lib.WordArray.random(len / 8).toString();
+    }
+  });
+
   // browserAction/script.js
-  var CryptoJS = require_crypto_js();
+  var {
+    getServerKey: getServerKey2,
+    getChannelKey: getChannelKey2,
+    generateRandomKey: generateRandomKey2,
+    getCurrentId: getCurrentId2
+  } = (init_storage(), __toCommonJS(storage_exports));
   var server_input = document.getElementById("server_key");
   var channel_input = document.getElementById("channel_key");
-  browser.storage.local.get("server_key").then((elt) => {
-    if (elt.server_key === void 0) {
-      server_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
-      browser.storage.local.set({
-        server_key: server_input.value
-      });
-    } else {
-      server_input.value = elt.server_key;
-    }
-  });
-  browser.storage.local.get("channel_key").then((elt) => {
-    if (elt.channel_key === void 0) {
-      channel_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
-      browser.storage.local.set({
-        channel_key: channel_input.value
-      });
-    } else {
-      channel_input.value = elt.channel_key;
-    }
+  var urlQuery = { active: true, lastFocusedWindow: true };
+  browser.tabs.query(urlQuery, (tabs) => {
+    const url = tabs[0].url;
+    const id = getCurrentId2(url);
+    getServerKey2(id.server).then((key) => {
+      server_input.value = key ?? "";
+    });
+    getChannelKey2(id.server, id.channel).then((key) => {
+      channel_input.value = key ?? "";
+    });
   });
   server_input.addEventListener("change", (event) => {
-    browser.storage.local.set({ server_key: event.target.value });
+    browser.tabs.query(urlQuery, (tabs) => {
+      const url = tabs[0].url;
+      const id = getCurrentId2(url);
+      const key = event.target.value;
+      if (key === "") {
+        browser.storage.local.remove(id.server);
+      } else {
+        browser.storage.local.set({
+          [id.server]: key
+        });
+      }
+    });
   });
   channel_input.addEventListener("change", (event) => {
-    browser.storage.local.set({ channel_key: event.target.value });
+    browser.tabs.query(urlQuery, (tabs) => {
+      const url = tabs[0].url;
+      const id = getCurrentId2(url);
+      const key = event.target.value;
+      if (key === "") {
+        browser.storage.local.remove(`${id.server}/${id.channel}`);
+      } else {
+        browser.storage.local.set({
+          [`${id.server}/${id.channel}`]: key
+        });
+      }
+    });
   });
   [256, 512, 1024, 2048].forEach((key_len) => {
     document.getElementById("generate_key_" + key_len).addEventListener("click", (event) => {
-      navigator.clipboard.writeText(
-        CryptoJS.lib.WordArray.random(key_len / 8).toString()
-      );
+      navigator.clipboard.writeText(generateRandomKey2(256));
       document.getElementById("copied_key_" + key_len).style.display = "inline-block";
     });
   });

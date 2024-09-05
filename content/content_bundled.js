@@ -29,7 +29,7 @@
           root.CryptoJS = factory();
         }
       })(exports, function() {
-        var CryptoJS2 = CryptoJS2 || function(Math2, undefined2) {
+        var CryptoJS3 = CryptoJS3 || function(Math2, undefined2) {
           var crypto;
           if (typeof window !== "undefined" && window.crypto) {
             crypto = window.crypto;
@@ -620,7 +620,7 @@
           var C_algo = C.algo = {};
           return C;
         }(Math);
-        return CryptoJS2;
+        return CryptoJS3;
       });
     }
   });
@@ -636,9 +636,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(undefined2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Base = C_lib.Base;
           var X32WordArray = C_lib.WordArray;
@@ -877,7 +877,7 @@
             }
           });
         })();
-        return CryptoJS2;
+        return CryptoJS3;
       });
     }
   });
@@ -893,12 +893,12 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
           if (typeof ArrayBuffer != "function") {
             return;
           }
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var superInit = WordArray.init;
@@ -922,7 +922,7 @@
           };
           subInit.prototype = WordArray;
         })();
-        return CryptoJS2.lib.WordArray;
+        return CryptoJS3.lib.WordArray;
       });
     }
   });
@@ -938,9 +938,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var C_enc = C.enc;
@@ -1040,7 +1040,7 @@
             return word << 8 & 4278255360 | word >>> 8 & 16711935;
           }
         })();
-        return CryptoJS2.enc.Utf16;
+        return CryptoJS3.enc.Utf16;
       });
     }
   });
@@ -1056,9 +1056,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var C_enc = C.enc;
@@ -1148,7 +1148,7 @@
             return WordArray.create(words, nBytes);
           }
         })();
-        return CryptoJS2.enc.Base64;
+        return CryptoJS3.enc.Base64;
       });
     }
   });
@@ -1164,9 +1164,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var C_enc = C.enc;
@@ -1267,7 +1267,7 @@
             return WordArray.create(words, nBytes);
           }
         })();
-        return CryptoJS2.enc.Base64url;
+        return CryptoJS3.enc.Base64url;
       });
     }
   });
@@ -1283,9 +1283,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(Math2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var Hasher = C_lib.Hasher;
@@ -1446,7 +1446,7 @@
           C.MD5 = Hasher._createHelper(MD5);
           C.HmacMD5 = Hasher._createHmacHelper(MD5);
         })(Math);
-        return CryptoJS2.MD5;
+        return CryptoJS3.MD5;
       });
     }
   });
@@ -1462,9 +1462,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var Hasher = C_lib.Hasher;
@@ -1537,7 +1537,7 @@
           C.SHA1 = Hasher._createHelper(SHA1);
           C.HmacSHA1 = Hasher._createHmacHelper(SHA1);
         })();
-        return CryptoJS2.SHA1;
+        return CryptoJS3.SHA1;
       });
     }
   });
@@ -1553,9 +1553,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(Math2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var Hasher = C_lib.Hasher;
@@ -1658,7 +1658,7 @@
           C.SHA256 = Hasher._createHelper(SHA256);
           C.HmacSHA256 = Hasher._createHmacHelper(SHA256);
         })(Math);
-        return CryptoJS2.SHA256;
+        return CryptoJS3.SHA256;
       });
     }
   });
@@ -1674,9 +1674,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var C_algo = C.algo;
@@ -1703,7 +1703,7 @@
           C.SHA224 = SHA256._createHelper(SHA224);
           C.HmacSHA224 = SHA256._createHmacHelper(SHA224);
         })();
-        return CryptoJS2.SHA224;
+        return CryptoJS3.SHA224;
       });
     }
   });
@@ -1719,9 +1719,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Hasher = C_lib.Hasher;
           var C_x64 = C.x64;
@@ -1985,7 +1985,7 @@
           C.SHA512 = Hasher._createHelper(SHA512);
           C.HmacSHA512 = Hasher._createHmacHelper(SHA512);
         })();
-        return CryptoJS2.SHA512;
+        return CryptoJS3.SHA512;
       });
     }
   });
@@ -2001,9 +2001,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_x64 = C.x64;
           var X64Word = C_x64.Word;
           var X64WordArray = C_x64.WordArray;
@@ -2031,7 +2031,7 @@
           C.SHA384 = SHA512._createHelper(SHA384);
           C.HmacSHA384 = SHA512._createHmacHelper(SHA384);
         })();
-        return CryptoJS2.SHA384;
+        return CryptoJS3.SHA384;
       });
     }
   });
@@ -2047,9 +2047,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(Math2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var Hasher = C_lib.Hasher;
@@ -2233,7 +2233,7 @@
           C.SHA3 = Hasher._createHelper(SHA3);
           C.HmacSHA3 = Hasher._createHmacHelper(SHA3);
         })(Math);
-        return CryptoJS2.SHA3;
+        return CryptoJS3.SHA3;
       });
     }
   });
@@ -2249,9 +2249,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(Math2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var Hasher = C_lib.Hasher;
@@ -2704,7 +2704,7 @@
           C.RIPEMD160 = Hasher._createHelper(RIPEMD160);
           C.HmacRIPEMD160 = Hasher._createHmacHelper(RIPEMD160);
         })(Math);
-        return CryptoJS2.RIPEMD160;
+        return CryptoJS3.RIPEMD160;
       });
     }
   });
@@ -2720,9 +2720,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Base = C_lib.Base;
           var C_enc = C.enc;
@@ -2827,9 +2827,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Base = C_lib.Base;
           var WordArray = C_lib.WordArray;
@@ -2909,7 +2909,7 @@
             return PBKDF2.create(cfg).compute(password, salt);
           };
         })();
-        return CryptoJS2.PBKDF2;
+        return CryptoJS3.PBKDF2;
       });
     }
   });
@@ -2925,9 +2925,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Base = C_lib.Base;
           var WordArray = C_lib.WordArray;
@@ -3000,7 +3000,7 @@
             return EvpKDF.create(cfg).compute(password, salt);
           };
         })();
-        return CryptoJS2.EvpKDF;
+        return CryptoJS3.EvpKDF;
       });
     }
   });
@@ -3016,9 +3016,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.lib.Cipher || function(undefined2) {
-          var C = CryptoJS2;
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.lib.Cipher || function(undefined2) {
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var Base = C_lib.Base;
           var WordArray = C_lib.WordArray;
@@ -3660,9 +3660,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.mode.CFB = function() {
-          var CFB = CryptoJS2.lib.BlockCipherMode.extend();
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.mode.CFB = function() {
+          var CFB = CryptoJS3.lib.BlockCipherMode.extend();
           CFB.Encryptor = CFB.extend({
             processBlock: function(words, offset) {
               var cipher = this._cipher;
@@ -3696,7 +3696,7 @@
           }
           return CFB;
         }();
-        return CryptoJS2.mode.CFB;
+        return CryptoJS3.mode.CFB;
       });
     }
   });
@@ -3712,9 +3712,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.mode.CTR = function() {
-          var CTR = CryptoJS2.lib.BlockCipherMode.extend();
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.mode.CTR = function() {
+          var CTR = CryptoJS3.lib.BlockCipherMode.extend();
           var Encryptor = CTR.Encryptor = CTR.extend({
             processBlock: function(words, offset) {
               var cipher = this._cipher;
@@ -3736,7 +3736,7 @@
           CTR.Decryptor = Encryptor;
           return CTR;
         }();
-        return CryptoJS2.mode.CTR;
+        return CryptoJS3.mode.CTR;
       });
     }
   });
@@ -3752,9 +3752,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.mode.CTRGladman = function() {
-          var CTRGladman = CryptoJS2.lib.BlockCipherMode.extend();
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.mode.CTRGladman = function() {
+          var CTRGladman = CryptoJS3.lib.BlockCipherMode.extend();
           function incWord(word) {
             if ((word >> 24 & 255) === 255) {
               var b1 = word >> 16 & 255;
@@ -3811,7 +3811,7 @@
           CTRGladman.Decryptor = Encryptor;
           return CTRGladman;
         }();
-        return CryptoJS2.mode.CTRGladman;
+        return CryptoJS3.mode.CTRGladman;
       });
     }
   });
@@ -3827,9 +3827,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.mode.OFB = function() {
-          var OFB = CryptoJS2.lib.BlockCipherMode.extend();
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.mode.OFB = function() {
+          var OFB = CryptoJS3.lib.BlockCipherMode.extend();
           var Encryptor = OFB.Encryptor = OFB.extend({
             processBlock: function(words, offset) {
               var cipher = this._cipher;
@@ -3849,7 +3849,7 @@
           OFB.Decryptor = Encryptor;
           return OFB;
         }();
-        return CryptoJS2.mode.OFB;
+        return CryptoJS3.mode.OFB;
       });
     }
   });
@@ -3865,9 +3865,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.mode.ECB = function() {
-          var ECB = CryptoJS2.lib.BlockCipherMode.extend();
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.mode.ECB = function() {
+          var ECB = CryptoJS3.lib.BlockCipherMode.extend();
           ECB.Encryptor = ECB.extend({
             processBlock: function(words, offset) {
               this._cipher.encryptBlock(words, offset);
@@ -3880,7 +3880,7 @@
           });
           return ECB;
         }();
-        return CryptoJS2.mode.ECB;
+        return CryptoJS3.mode.ECB;
       });
     }
   });
@@ -3896,8 +3896,8 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.pad.AnsiX923 = {
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.pad.AnsiX923 = {
           pad: function(data, blockSize) {
             var dataSigBytes = data.sigBytes;
             var blockSizeBytes = blockSize * 4;
@@ -3912,7 +3912,7 @@
             data.sigBytes -= nPaddingBytes;
           }
         };
-        return CryptoJS2.pad.Ansix923;
+        return CryptoJS3.pad.Ansix923;
       });
     }
   });
@@ -3928,19 +3928,19 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.pad.Iso10126 = {
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.pad.Iso10126 = {
           pad: function(data, blockSize) {
             var blockSizeBytes = blockSize * 4;
             var nPaddingBytes = blockSizeBytes - data.sigBytes % blockSizeBytes;
-            data.concat(CryptoJS2.lib.WordArray.random(nPaddingBytes - 1)).concat(CryptoJS2.lib.WordArray.create([nPaddingBytes << 24], 1));
+            data.concat(CryptoJS3.lib.WordArray.random(nPaddingBytes - 1)).concat(CryptoJS3.lib.WordArray.create([nPaddingBytes << 24], 1));
           },
           unpad: function(data) {
             var nPaddingBytes = data.words[data.sigBytes - 1 >>> 2] & 255;
             data.sigBytes -= nPaddingBytes;
           }
         };
-        return CryptoJS2.pad.Iso10126;
+        return CryptoJS3.pad.Iso10126;
       });
     }
   });
@@ -3956,18 +3956,18 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.pad.Iso97971 = {
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.pad.Iso97971 = {
           pad: function(data, blockSize) {
-            data.concat(CryptoJS2.lib.WordArray.create([2147483648], 1));
-            CryptoJS2.pad.ZeroPadding.pad(data, blockSize);
+            data.concat(CryptoJS3.lib.WordArray.create([2147483648], 1));
+            CryptoJS3.pad.ZeroPadding.pad(data, blockSize);
           },
           unpad: function(data) {
-            CryptoJS2.pad.ZeroPadding.unpad(data);
+            CryptoJS3.pad.ZeroPadding.unpad(data);
             data.sigBytes--;
           }
         };
-        return CryptoJS2.pad.Iso97971;
+        return CryptoJS3.pad.Iso97971;
       });
     }
   });
@@ -3983,8 +3983,8 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.pad.ZeroPadding = {
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.pad.ZeroPadding = {
           pad: function(data, blockSize) {
             var blockSizeBytes = blockSize * 4;
             data.clamp();
@@ -4001,7 +4001,7 @@
             }
           }
         };
-        return CryptoJS2.pad.ZeroPadding;
+        return CryptoJS3.pad.ZeroPadding;
       });
     }
   });
@@ -4017,14 +4017,14 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        CryptoJS2.pad.NoPadding = {
+      })(exports, function(CryptoJS3) {
+        CryptoJS3.pad.NoPadding = {
           pad: function() {
           },
           unpad: function() {
           }
         };
-        return CryptoJS2.pad.NoPadding;
+        return CryptoJS3.pad.NoPadding;
       });
     }
   });
@@ -4040,9 +4040,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function(undefined2) {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var CipherParams = C_lib.CipherParams;
           var C_enc = C.enc;
@@ -4084,7 +4084,7 @@
             }
           };
         })();
-        return CryptoJS2.format.Hex;
+        return CryptoJS3.format.Hex;
       });
     }
   });
@@ -4100,9 +4100,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var BlockCipher = C_lib.BlockCipher;
           var C_algo = C.algo;
@@ -4238,7 +4238,7 @@
           });
           C.AES = BlockCipher._createHelper(AES);
         })();
-        return CryptoJS2.AES;
+        return CryptoJS3.AES;
       });
     }
   });
@@ -4254,9 +4254,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var WordArray = C_lib.WordArray;
           var BlockCipher = C_lib.BlockCipher;
@@ -5019,7 +5019,7 @@
           });
           C.TripleDES = BlockCipher._createHelper(TripleDES);
         })();
-        return CryptoJS2.TripleDES;
+        return CryptoJS3.TripleDES;
       });
     }
   });
@@ -5035,9 +5035,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var StreamCipher = C_lib.StreamCipher;
           var C_algo = C.algo;
@@ -5102,7 +5102,7 @@
           });
           C.RC4Drop = StreamCipher._createHelper(RC4Drop);
         })();
-        return CryptoJS2.RC4;
+        return CryptoJS3.RC4;
       });
     }
   });
@@ -5118,9 +5118,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var StreamCipher = C_lib.StreamCipher;
           var C_algo = C.algo;
@@ -5231,7 +5231,7 @@
           }
           C.Rabbit = StreamCipher._createHelper(Rabbit);
         })();
-        return CryptoJS2.Rabbit;
+        return CryptoJS3.Rabbit;
       });
     }
   });
@@ -5247,9 +5247,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var StreamCipher = C_lib.StreamCipher;
           var C_algo = C.algo;
@@ -5357,7 +5357,7 @@
           }
           C.RabbitLegacy = StreamCipher._createHelper(RabbitLegacy);
         })();
-        return CryptoJS2.RabbitLegacy;
+        return CryptoJS3.RabbitLegacy;
       });
     }
   });
@@ -5373,9 +5373,9 @@
         } else {
           factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
+      })(exports, function(CryptoJS3) {
         (function() {
-          var C = CryptoJS2;
+          var C = CryptoJS3;
           var C_lib = C.lib;
           var BlockCipher = C_lib.BlockCipher;
           var C_algo = C.algo;
@@ -6546,7 +6546,7 @@
           });
           C.Blowfish = BlockCipher._createHelper(Blowfish);
         })();
-        return CryptoJS2.Blowfish;
+        return CryptoJS3.Blowfish;
       });
     }
   });
@@ -6562,34 +6562,63 @@
         } else {
           root.CryptoJS = factory(root.CryptoJS);
         }
-      })(exports, function(CryptoJS2) {
-        return CryptoJS2;
+      })(exports, function(CryptoJS3) {
+        return CryptoJS3;
       });
     }
   });
 
-  // content/encryption.js
+  // utils/storage.js
   var CryptoJS = require_crypto_js();
-  var server_key;
-  browser.storage.local.get("server_key").then((elt) => {
-    if (elt.server_key === void 0) {
-      server_key = CryptoJS.lib.WordArray.random(256 / 8).toString();
-      browser.storage.local.set({
-        server_key
-      });
-    } else {
-      server_key = elt.server_key;
+  function getCurrentId(url) {
+    return url.match(/\/channels\/(?<server>[^/]*)\/(?<channel>[^/]*)/).groups;
+  }
+  function getServerKey(serverId) {
+    return browser.storage.local.get(serverId).then((server) => {
+      return server[serverId];
+    });
+  }
+  function getChannelKey(serverId, channelId) {
+    return browser.storage.local.get(`${serverId}/${channelId}`).then((server) => {
+      return server[`${serverId}/${channelId}`];
+    });
+  }
+
+  // content/encryption.js
+  var CryptoJS2 = require_crypto_js();
+  var id = getCurrentId(window.location.href);
+  var keys = {};
+  var retrieveKeys = () => {
+    getServerKey(id.server).then((key) => keys.server = key);
+    getChannelKey(id.server, id.channel).then((key) => keys.channel = key);
+  };
+  retrieveKeys();
+  browser.storage.local.onChanged.addListener(() => retrieveKeys());
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === "url_changed") {
+      id = getCurrentId(window.location.href);
+      retrieveKeys();
     }
   });
-  browser.storage.local.onChanged.addListener((elt) => {
-    server_key = elt.server_key.newValue;
-  });
+  function getKey() {
+    if (keys === void 0) {
+      return;
+    }
+    if (keys.channel === void 0 || keys.channel === "") {
+      return keys.server;
+    }
+    return keys.channel;
+  }
   var encryption = {
     PLAIN: (message) => {
       return message;
     },
     AES: (message) => {
-      return CryptoJS.AES.encrypt(message, server_key).toString();
+      const key = getKey();
+      if (key === void 0) {
+        return;
+      }
+      return CryptoJS2.AES.encrypt(message, key).toString();
     }
   };
   var decryption = {
@@ -6597,16 +6626,17 @@
       return message;
     },
     AES: (message) => {
-      const decrypted = CryptoJS.AES.decrypt(message, server_key);
+      const key = getKey();
+      if (key === void 0) {
+        return;
+      }
+      const decrypted = CryptoJS2.AES.decrypt(message, key);
       try {
-        const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
+        const decryptedStr = decrypted.toString(CryptoJS2.enc.Utf8);
         if (decryptedStr !== "") {
           return decryptedStr;
         }
       } catch (e) {
-        console.log(
-          "Message couldn't be decrypted, either it was not encrypted or you have the wrong password"
-        );
       }
     }
   };
@@ -6616,10 +6646,17 @@
     }
     for (const [algo, lambda] of Object.entries(encryption)) {
       if (message.startsWith(`/${algo} `)) {
-        return `/${algo} ${lambda(message.substring(algo.length + 2))}`;
+        const encrypted2 = lambda(message.substring(algo.length + 2));
+        if (encrypted2 !== void 0) {
+          return `/${algo} ${encrypted2}`;
+        }
       }
     }
-    return `/AES ${encryption.AES(message)}`;
+    const encrypted = encryption.AES(message);
+    if (encrypted === void 0) {
+      return `/PLAIN ${encryption.PLAIN(message)}`;
+    }
+    return `/AES ${encrypted}`;
   }
   function decryptMessage(message) {
     for (const [algo, lambda] of Object.entries(decryption)) {
@@ -6668,54 +6705,58 @@
       escapeHtml(messageDecrypted)
     );
   }
-  function showDecryptedMessageEdition(container) {
-    let messageEncrypted = "";
-    Array.from(container.children).forEach((span) => {
-      if (!span.className.startsWith("timestamp")) {
-        messageEncrypted += span.innerHTML;
-        span.focus();
-        span.setAttribute("contentEditable", true);
-        document.execCommand("selectAll", false);
-        document.execCommand("insertText", false, "");
-      }
-    });
-    messageEncrypted = unescapeHtml(messageEncrypted);
-    const messageDecrypted = decryptMessage(messageEncrypted) ?? messageEncrypted;
-    container.firstElementChild.focus();
-    document.execCommand("insertText", false, escapeHtml(messageDecrypted));
-  }
-  waitForElement('ol[data-list-id="chat-messages"]').then((targetNode) => {
-    const config = { attributes: true, childList: true, subtree: true };
-    const callback = (mutationList, observer2) => {
-      for (const mutation of mutationList) {
-        if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            if (node.id !== void 0 && node.id.startsWith("chat-messages-")) {
-              showDecryptedMessage(
-                node.querySelector("div[id^=message-content]")
-              );
-            } else if (node.localName === "span" && node.parentElement.id !== void 0 && node.parentElement.id.startsWith !== "message-content-") {
-              showDecryptedMessage(node.parentElement);
-            } else if (node.dataset !== void 0 && node.dataset.slateNode === "element") {
-              showDecryptedMessageEdition(
-                node.querySelector("span[data-slate-leaf=true]")
-              );
-            }
-          });
-        } else if (mutation.type === "attributes") {
+  function listenMutations() {
+    waitForElement('ol[data-list-id="chat-messages"]').then((targetNode) => {
+      const config = { attributes: true, childList: true, subtree: true };
+      const callback = (mutationList, observer2) => {
+        for (const mutation of mutationList) {
+          if (mutation.type === "childList") {
+            mutation.addedNodes.forEach((node) => {
+              if (node.id !== void 0 && node.id.startsWith("chat-messages-")) {
+                let container = node.querySelector("div[id^=message-content]");
+                if (container !== null && container.children.length !== 0) {
+                  showDecryptedMessage(container);
+                }
+              } else if (node.localName === "span" && node.parentElement !== null && node.parentElement.id !== void 0 && node.parentElement.id.startsWith !== "message-content-") {
+                let container = node.parentElement;
+                if (container !== null && container.children.length !== 0) {
+                  showDecryptedMessage(container);
+                }
+              } else if (node.dataset !== void 0 && node.dataset.slateNode === "element") {
+                let container = node.querySelector("span[data-slate-leaf=true]");
+                if (container !== null && container.children.length !== 0) {
+                  showDecryptedMessage(container);
+                }
+              }
+            });
+          } else if (mutation.type === "attributes") {
+          }
         }
+      };
+      const observer = new MutationObserver(callback);
+      observer.observe(targetNode, config);
+    });
+  }
+  listenMutations();
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === "url_changed") {
+      listenMutations();
+      let node = document.querySelector("ol[data-list-id=chat-messages]");
+      if (node !== null) {
+        Array.from(node.children).forEach((child) => {
+          if (child.localName === "li") {
+            let container = child.querySelector("div[id^=message-content]");
+            if (container !== null && container.children.length !== 0) {
+              showDecryptedMessage(container);
+            }
+          }
+        });
       }
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(targetNode, config);
+    }
   });
 
   // content/request_processor.js
   addEventListener("crypord_request_received", (event) => {
-    console.warn(
-      "DEBUGPRINT[50]: request_processor.js:11: event.detail=",
-      event.detail
-    );
     dispatchEvent(
       new CustomEvent("crypord_request_received_result", {
         detail: processRetrievedMessages(event.detail)
@@ -6724,10 +6765,6 @@
     event.stopImmediatePropagation();
   });
   addEventListener("crypord_request_sent", (event) => {
-    console.warn(
-      "DEBUGPRINT[51]: request_processor.js:20: event.detail=",
-      event.detail
-    );
     dispatchEvent(
       new CustomEvent("crypord_request_sent_result", {
         detail: processSendingMessages(event.detail)

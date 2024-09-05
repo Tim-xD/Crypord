@@ -30,5 +30,5 @@
     "page": "options/index.html"
   },
 
-  "permissions": ["storage", "scripting", "*://*.discord.com/*"]
+  "permissions": ["tabs", "storage", "scripting", "*://*.discord.com/*"]
 }

@@ -9,18 +9,10 @@ let sentQueue = [];
 /** Events listener retrieving the modifications to apply */
 addEventListener("crypord_request_received_result", (event) => {
   receivedQueue.push(event.detail);
-  console.warn(
-    "DEBUGPRINT[11]: request_interceptor.js:11: event.detail=",
-    event.detail,
-  );
   event.stopImmediatePropagation();
 });
 addEventListener("crypord_request_sent_result", (event) => {
   sentQueue.push(event.detail);
-  console.warn(
-    "DEBUGPRINT[10]: request_interceptor.js:15: event.detail=",
-    event.detail,
-  );
   event.stopImmediatePropagation();
 });
 

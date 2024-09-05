@@ -2,37 +2,63 @@
  * @file Encrypt and decrypt messages
  */
 
+import { getChannelKey, getCurrentId, getServerKey } from "../utils/storage";
+
 let CryptoJS = require("crypto-js");
 
-let server_key;
+let id = getCurrentId(window.location.href);
+let keys = {};
+const retrieveKeys = () => {
+  getServerKey(id.server).then((key) => (keys.server = key));
+  getChannelKey(id.server, id.channel).then((key) => (keys.channel = key));
+};
 
-browser.storage.local.get("server_key").then((elt) => {
-  if (elt.server_key === undefined) {
-    server_key = CryptoJS.lib.WordArray.random(256 / 8).toString();
-    browser.storage.local.set({
-      server_key: server_key,
-    });
-  } else {
-    server_key = elt.server_key;
+retrieveKeys();
+
+browser.storage.local.onChanged.addListener(() => retrieveKeys());
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === "url_changed") {
+    id = getCurrentId(window.location.href);
+    retrieveKeys();
   }
 });
 
-browser.storage.local.onChanged.addListener((elt) => {
-  server_key = elt.server_key.newValue;
-});
+/**
+ * Get key to use for encryption/decryption
+ * Choose channel key if possible, else server key
+ *
+ * @returns {string} The key to use, or undefined
+ */
+function getKey() {
+  if (keys === undefined) {
+    return;
+  }
+
+  if (keys.channel === undefined || keys.channel === "") {
+    return keys.server;
+  }
+
+  return keys.channel;
+}
 
 /**
  * Dict of encryption functions
  *
  * @param {string} message The message to encrypt
- * @returns {string} The encrypted message
+ * @returns {string} The encrypted message, or undefined on error
  */
 const encryption = {
   PLAIN: (message) => {
     return message;
   },
   AES: (message) => {
-    return CryptoJS.AES.encrypt(message, server_key).toString();
+    const key = getKey();
+    if (key === undefined) {
+      return;
+    }
+
+    return CryptoJS.AES.encrypt(message, key).toString();
   },
 };
 
@@ -40,25 +66,26 @@ const encryption = {
  * Dict of decryption functions
  *
  * @param {string} message The message to decrypt
- * @returns {string} The decrypted message
+ * @returns {string} The decrypted message, or undefined on error
  */
 const decryption = {
   PLAIN: (message) => {
     return message;
   },
   AES: (message) => {
-    const decrypted = CryptoJS.AES.decrypt(message, server_key);
+    const key = getKey();
+    if (key === undefined) {
+      return;
+    }
+
+    const decrypted = CryptoJS.AES.decrypt(message, key);
     try {
       const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
 
       if (decryptedStr !== "") {
         return decryptedStr;
       }
-    } catch (e) {
-      console.log(
-        "Message couldn't be decrypted, either it was not encrypted or you have the wrong password",
-      );
-    }
+    } catch (e) {}
   },
 };
 
@@ -75,11 +102,21 @@ export function encryptMessage(message) {
 
   for (const [algo, lambda] of Object.entries(encryption)) {
     if (message.startsWith(`/${algo} `)) {
-      return `/${algo} ${lambda(message.substring(algo.length + 2))}`;
+      const encrypted = lambda(message.substring(algo.length + 2));
+
+      if (encrypted !== undefined) {
+        return `/${algo} ${encrypted}`;
+      }
     }
   }
 
-  return `/AES ${encryption.AES(message)}`;
+  const encrypted = encryption.AES(message);
+
+  if (encrypted === undefined) {
+    return `/PLAIN ${encryption.PLAIN(message)}`;
+  }
+
+  return `/AES ${encrypted}`;
 }
 
 /**

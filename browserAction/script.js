@@ -1,45 +1,63 @@
-let CryptoJS = require("crypto-js");
+const {
+  getServerKey,
+  getChannelKey,
+  generateRandomKey,
+  getCurrentId,
+} = require("../utils/storage");
 
 let server_input = document.getElementById("server_key");
 let channel_input = document.getElementById("channel_key");
+const urlQuery = { active: true, lastFocusedWindow: true };
 
-browser.storage.local.get("server_key").then((elt) => {
-  if (elt.server_key === undefined) {
-    server_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
-    browser.storage.local.set({
-      server_key: server_input.value,
-    });
-  } else {
-    server_input.value = elt.server_key;
-  }
-});
+browser.tabs.query(urlQuery, (tabs) => {
+  const url = tabs[0].url;
+  const id = getCurrentId(url);
 
-browser.storage.local.get("channel_key").then((elt) => {
-  if (elt.channel_key === undefined) {
-    channel_input.value = CryptoJS.lib.WordArray.random(256 / 8).toString();
-    browser.storage.local.set({
-      channel_key: channel_input.value,
-    });
-  } else {
-    channel_input.value = elt.channel_key;
-  }
+  getServerKey(id.server).then((key) => {
+    server_input.value = key ?? "";
+  });
+  getChannelKey(id.server, id.channel).then((key) => {
+    channel_input.value = key ?? "";
+  });
 });
 
 server_input.addEventListener("change", (event) => {
-  browser.storage.local.set({ server_key: event.target.value });
+  browser.tabs.query(urlQuery, (tabs) => {
+    const url = tabs[0].url;
+    const id = getCurrentId(url);
+    const key = event.target.value;
+
+    if (key === "") {
+      browser.storage.local.remove(id.server);
+    } else {
+      browser.storage.local.set({
+        [id.server]: key,
+      });
+    }
+  });
 });
 
 channel_input.addEventListener("change", (event) => {
-  browser.storage.local.set({ channel_key: event.target.value });
+  browser.tabs.query(urlQuery, (tabs) => {
+    const url = tabs[0].url;
+    const id = getCurrentId(url);
+    const key = event.target.value;
+
+    if (key === "") {
+      browser.storage.local.remove(`${id.server}/${id.channel}`);
+    } else {
+      browser.storage.local.set({
+        [`${id.server}/${id.channel}`]: key,
+      });
+    }
+  });
 });
 
 [256, 512, 1024, 2048].forEach((key_len) => {
   document
     .getElementById("generate_key_" + key_len)
     .addEventListener("click", (event) => {
-      navigator.clipboard.writeText(
-        CryptoJS.lib.WordArray.random(key_len / 8).toString(),
-      );
+      navigator.clipboard.writeText(generateRandomKey(256));
       document.getElementById("copied_key_" + key_len).style.display =
         "inline-block";
     });

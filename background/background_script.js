@@ -5,3 +5,9 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     world: "MAIN",
   });
 });
+
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  chrome.tabs.sendMessage(tabId, {
+    message: "url_changed",
+  });
+});

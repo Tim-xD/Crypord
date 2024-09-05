@@ -117,45 +117,77 @@ function showDecryptedMessageEdition(container) {
   document.execCommand("insertText", false, escapeHtml(messageDecrypted));
 }
 
-waitForElement('ol[data-list-id="chat-messages"]').then((targetNode) => {
-  // Options for the observer (which mutations to observe)
-  const config = { attributes: true, childList: true, subtree: true };
+/**
+ * Listen to mutations and change them
+ */
+function listenMutations() {
+  waitForElement('ol[data-list-id="chat-messages"]').then((targetNode) => {
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
 
-  // Callback function to execute when mutations are observed
-  const callback = (mutationList, observer) => {
-    for (const mutation of mutationList) {
-      if (mutation.type === "childList") {
-        mutation.addedNodes.forEach((node) => {
-          if (node.id !== undefined && node.id.startsWith("chat-messages-")) {
-            // Show the sent message
-            showDecryptedMessage(
-              node.querySelector("div[id^=message-content]"),
-            );
-          } else if (
-            node.localName === "span" &&
-            node.parentElement.id !== undefined &&
-            node.parentElement.id.startsWith !== "message-content-"
-          ) {
-            // Show the message after edition
-            showDecryptedMessage(node.parentElement);
-          } else if (
-            node.dataset !== undefined &&
-            node.dataset.slateNode === "element"
-          ) {
-            // Show the message when editing
-            showDecryptedMessageEdition(
-              node.querySelector("span[data-slate-leaf=true]"),
-            );
-          }
-        });
-      } else if (mutation.type === "attributes") {
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+      for (const mutation of mutationList) {
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            if (node.id !== undefined && node.id.startsWith("chat-messages-")) {
+              // Show the sent message
+              let container = node.querySelector("div[id^=message-content]");
+              if (container !== null && container.children.length !== 0) {
+                showDecryptedMessage(container);
+              }
+            } else if (
+              node.localName === "span" &&
+              node.parentElement !== null &&
+              node.parentElement.id !== undefined &&
+              node.parentElement.id.startsWith !== "message-content-"
+            ) {
+              // Show the message after edition
+              let container = node.parentElement;
+              if (container !== null && container.children.length !== 0) {
+                showDecryptedMessage(container);
+              }
+            } else if (
+              node.dataset !== undefined &&
+              node.dataset.slateNode === "element"
+            ) {
+              // Show the message when editing
+              let container = node.querySelector("span[data-slate-leaf=true]");
+              if (container !== null && container.children.length !== 0) {
+                showDecryptedMessage(container);
+              }
+            }
+          });
+        } else if (mutation.type === "attributes") {
+        }
       }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+  });
+}
+
+listenMutations();
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === "url_changed") {
+    listenMutations();
+
+    let node = document.querySelector("ol[data-list-id=chat-messages]");
+
+    if (node !== null) {
+      Array.from(node.children).forEach((child) => {
+        if (child.localName === "li") {
+          let container = child.querySelector("div[id^=message-content]");
+          if (container !== null && container.children.length !== 0) {
+            showDecryptedMessage(container);
+          }
+        }
+      });
     }
-  };
-
-  // Create an observer instance linked to the callback function
-  const observer = new MutationObserver(callback);
-
-  // Start observing the target node for configured mutations
-  observer.observe(targetNode, config);
+  }
 });
